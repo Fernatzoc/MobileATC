@@ -17,19 +17,29 @@ class HomePage extends StatelessWidget {
               title: const Text('Guia ATC'),
               pinned: true,
               floating: true,
+              backgroundColor: const Color(0xff089cad),
+              titleTextStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 20.0
+              ),
               actions: [
                 Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
-                      onTap: () { print('Search'); },
+                      onTap: () {
+                        print('Search');
+                      },
                       child: const Icon(
                         Icons.search,
                         size: 26.0,
+                        color: Colors.white,
                       ),
                     )),
               ],
               bottom: const TabBar(
                 isScrollable: false,
+                indicatorColor: Colors.amberAccent,
+                indicatorWeight: 4.0,
                 tabs: [
                   Tab(child: Text('Grupos')),
                   Tab(child: Text('Favoritos')),
@@ -39,10 +49,7 @@ class HomePage extends StatelessWidget {
           ];
         },
         body: const TabBarView(
-          children: <Widget>[
-            Groups(), 
-            Favorites()
-          ],
+          children: <Widget>[Groups(), Favorites()],
         ),
       )),
     );

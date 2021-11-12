@@ -8,8 +8,6 @@ class CardButtom extends StatelessWidget {
 
   final Group group;
 
-
-
   const CardButtom({ 
     Key? key, 
     required this.group
@@ -19,14 +17,13 @@ class CardButtom extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // print('${ group.title }');
         final groupProvider = Provider.of<GroupProvider>(context, listen: false);
         groupProvider.selectedGroup = group.title;
         Navigator.pushNamed(context, 'classification', arguments: group.title);
       },
       child: Stack(
         children: [
-          _CardButtomBackground(color1: group.color1, color2: group.color2, icon: group.icon, image: group.image,),
+          _CardButtomBackground(icon: group.icon, image: group.image,),
     
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -53,15 +50,11 @@ class _CardButtomBackground extends StatelessWidget {
 
   final IconData icon;
   final String image;
-  final Color color1;
-  final Color color2;
 
   const _CardButtomBackground({
     Key? key, 
     required this.icon,
     required this.image,
-    this.color1 = Colors.green, 
-    this.color2 = Colors.grey, 
   }) : super(key: key);
 
   @override
@@ -74,7 +67,6 @@ class _CardButtomBackground extends StatelessWidget {
             Positioned(
               right: -20,
               top: -20,
-              // child: FaIcon( icon, size: 150, color: Colors.white.withOpacity(0.2))
               child: Image(image: AssetImage(image), height: 150, width: 200, color: Colors.white.withOpacity(0.2),),
             )
           ],
@@ -88,10 +80,10 @@ class _CardButtomBackground extends StatelessWidget {
           BoxShadow(color: Colors.black.withOpacity(0.2), offset: const Offset(4,6), blurRadius: 10)
         ],
         borderRadius: BorderRadius.circular(15),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
-            color1,
-            color2,
+            Color(0xff21A3B5),
+            Color( 0xff2EA7B9),
           ]
         )
       ),

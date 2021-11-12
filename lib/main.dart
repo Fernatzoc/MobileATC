@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guia_medicamentos/providers/groups_provider.dart';
 import 'package:guia_medicamentos/routes.dart';
+import 'package:guia_medicamentos/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(const AppState());
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Farmacos',
       initialRoute: 'home',
       routes: appRoputes,
+      theme: theme,
     );
   }
 }

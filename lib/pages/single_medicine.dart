@@ -6,27 +6,136 @@ class SingleMedicine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    final Medicine medicine = ModalRoute.of(context)!.settings.arguments as Medicine;
+    final Medicine medicine =
+        ModalRoute.of(context)!.settings.arguments as Medicine;
 
-    print('${medicine.activePrincipleMed}');
+    Color colorPrimary = Theme.of(context).primaryColor;
 
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
+      appBar: AppBar(title: Text('${medicine.activePrincipleMed}')),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(5.0),
+          margin: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: const Color(0XFFEDEDED),
+                    borderRadius: BorderRadius.circular(6.0)),
+                width: double.infinity,
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                        child: Text('Principo Activo',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 22.0))),
+                    const SizedBox(height: 5.0),
+                    Center(
+                        child: Text(
+                      '${medicine.activePrincipleMed}',
+                      style: const TextStyle(fontSize: 18.0),
+                    )),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15.0),
+              _CardInfo(
+                  title: 'Forma Farmaceutica',
+                  color: const Color(0XFFEDEDED),
+                  code: medicine.pharmaceuticalFormMed.toString(),
+                  name: ''),
+              const SizedBox(height: 15.0),
+              _CardInfo(
+                  title: 'Indicaciones',
+                  color: const Color(0XFFEDEDED),
+                  code: medicine.indicationsMed.toString(),
+                  name: ''),
+              const SizedBox(height: 15.0),
+              _CardInfo(
+                  title: 'Via Y Posologia',
+                  color: const Color(0XFFEDEDED),
+                  code: medicine.routeDosageMed.toString(),
+                  name: ''),
+              const SizedBox(height: 15.0),
+              _CardInfo(
+                  title: 'Normas De Administración',
+                  color: const Color(0XFFEDEDED),
+                  code: medicine.managementRulesMed.toString(),
+                  name: ''),
+              const SizedBox(height: 15.0),
+              if (medicine.observationsMed!.isNotEmpty)
+                Column(
+                  children: [
+                    _CardInfo(
+                        title: 'Observaciones',
+                        color: const Color(0XFFEDEDED),
+                        code: medicine.observationsMed.toString(),
+                        name: ''),
+                    const SizedBox(height: 15.0),
+                  ],
+                ),
+              _CardInfo(
+                  title: 'Grupo',
+                  color: colorPrimary.withOpacity(0.2),
+                  code: medicine.letterGroup.toString(),
+                  name: medicine.nameGroup.toString()),
+              const SizedBox(height: 15.0),
+              _CardInfo(
+                  title: 'Clasificación',
+                  color: colorPrimary.withOpacity(0.2),
+                  code: medicine.codeClassification.toString(),
+                  name: medicine.nameClassification.toString()),
+              const SizedBox(height: 15.0),
+              _CardInfo(
+                  title: 'Subclasificación',
+                  color: colorPrimary.withOpacity(0.2),
+                  code: medicine.codeSubClassification.toString(),
+                  name: medicine.nameSubClassification.toString()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CardInfo extends StatelessWidget {
+  const _CardInfo({
+    Key? key,
+    required this.color,
+    required this.title,
+    required this.code,
+    required this.name,
+  }) : super(key: key);
+
+  final Color color;
+  final String title;
+  final String code;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration:
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(6.0)),
+      width: double.infinity,
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('PRINCIPIO ACTIVO'),
-          Text('${medicine.activePrincipleMed}'),
-          Text('FORMA FARMACEUTICA'),
-          Text('${medicine.pharmaceuticalFormMed}'),
-          Text('INDICACIONES'),
-          Text('${medicine.indicationsMed}'),
-          Text('VIA Y POSOLOGIA'),
-          Text('${medicine.routeDosageMed}'),
-          Text('NORMAS DE ADMINISTRACIÓN'),
-          Text('${medicine.managementRulesMed}'),
-          Text('OBSERVACIONES'),
-          Text('${medicine.observationsMed}'),
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            code + ' ' + name,
+            style: const TextStyle(fontSize: 15),
+          ),
         ],
       ),
     );

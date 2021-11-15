@@ -13,20 +13,17 @@ class Classification extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-group';
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Grupo $group'),
+      ),
       body: medicines!.isEmpty
-          ? const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: SizedBox(
-                  height: 30.0,
-                  width: 30.0,
-                  child: CircularProgressIndicator()),
-            )
+          ? const Center(child: CircularProgressIndicator(
+            color: Color(0xff089cad),
+          ))
           : ListView.builder(
               physics: const BouncingScrollPhysics(),
               itemCount: medicines.length,
               itemBuilder: (BuildContext context, int index) {
-                print('reder');
                 return CardMedicine(medicine: medicines[index]);
               }),
     );

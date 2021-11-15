@@ -13,69 +13,58 @@ class GroupProvider extends ChangeNotifier {
   List<Group> groups = [
     Group(
         FontAwesomeIcons.clinicMedical,
-        'GRUPO A',
+        'A',
         'assets/icons/estomago.png',
-        'GRUPO A',
         'Tracto alimentario y metabolismo'),
     Group(
         FontAwesomeIcons.plus,
-        'GRUPO B',
+        'B',
         'assets/icons/sangre.png',
-        'GRUPO B',
         'Sangre y órganos hemotapoyéticos'),
     Group(
         FontAwesomeIcons.theaterMasks,
-        'GRUPO C',
+        'C',
         'assets/icons/corazon.png',
-        'GRUPO C',
         'Sistema cardiovascular'),
     Group(
         FontAwesomeIcons.biking,
-        'GRUPO D',
+        'D',
         'assets/icons/dermatologo.png',
-        'GRUPO D',
         'Dermatológicos'),
     Group(
         FontAwesomeIcons.carCrash,
-        'GRUPO G',
+        'G',
         'assets/icons/antiinfecciosos.png',
-        'GRUPO G',
         'Sistema genitourinario y hormonas sexuales'),
     Group(
         FontAwesomeIcons.plus,
-        'GRUPO H',
+        'H',
         'assets/icons/hormonas.png',
-        'GRUPO H',
         'Preparados hormonales sistémicos'),
     Group(
         FontAwesomeIcons.theaterMasks,
-        'GRUPO J',
+        'J',
         'assets/icons/antiinfecciosos.png',
-        'GRUPO J',
         'Antiinfecciosos para uso sistémico'),
     Group(
         FontAwesomeIcons.biking,
-        'GRUPO M',
+        'M',
         'assets/icons/cuerpo-humano.png',
-        'GRUPO M',
         'Sistema músculo‐ esquelético'),
     Group(
         FontAwesomeIcons.carCrash,
-        'GRUPO N',
+        'N',
         'assets/icons/sistema-nervioso.png',
-        'GRUPO N',
         'Sistema nervioso'),
     Group(
         FontAwesomeIcons.plus,
-        'GRUPO R',
+        'R',
         'assets/icons/sistema-respiratorio.png',
-        'GRUPO R',
         'Sistema respiratorio'),
     Group(
         FontAwesomeIcons.theaterMasks,
-        'GRUPO S',
+        'S',
         'assets/icons/cuerpo-humano.png',
-        'GRUPO S',
         'órganos de los sentidos'),
   ];
 
@@ -83,7 +72,7 @@ class GroupProvider extends ChangeNotifier {
 
   GroupProvider() {
     groups.forEach((item) {
-      medicines[item.title] = [];
+      medicines[item.request] = [];
     });
   }
 
@@ -104,7 +93,7 @@ class GroupProvider extends ChangeNotifier {
       return medicines[group];
     }
 
-    final url = Uri.parse('http://192.168.1.5:8000/api/medicines?letter=quo');
+    final url = Uri.parse('http://192.168.1.5:8000/api/medicines?letter=${group}');
 
     final resp = await http.get(url);
 

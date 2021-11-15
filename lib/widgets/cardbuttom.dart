@@ -18,8 +18,8 @@ class CardButtom extends StatelessWidget {
     return InkWell(
       onTap: () {
         final groupProvider = Provider.of<GroupProvider>(context, listen: false);
-        groupProvider.selectedGroup = group.title;
-        Navigator.pushNamed(context, 'classification', arguments: group.title);
+        groupProvider.selectedGroup = group.request;
+        Navigator.pushNamed(context, 'classification', arguments: group.request);
       },
       child: Stack(
         children: [
@@ -31,9 +31,9 @@ class CardButtom extends StatelessWidget {
               const SizedBox(height: 140, width: 40 ),
               Image(image: AssetImage(group.image), height: 50, width: 50, color: Colors.white,),
               const SizedBox(width: 20 ),
-              Text(group.title, style: const TextStyle( color: Colors.white, fontSize: 18  )),
+              Text('Grupo ${group.request}', style: const TextStyle( color: Colors.white, fontSize: 18  )),
               const SizedBox(width: 20 ),
-              Expanded(child: Text(group.subtitle, style: const TextStyle( color: Colors.white, fontSize: 18  ))),
+              Expanded(child: Text(group.subtitle, style: const TextStyle( color: Colors.white, fontSize: 16 ))),
               const SizedBox(width: 15 ),
               const FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white),
               const SizedBox(width: 40 ),

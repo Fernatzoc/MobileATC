@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guia_medicamentos/models/medicine.dart';
+import 'package:guia_medicamentos/providers/favorites_provider.dart';
+import 'package:provider/provider.dart';
 
 class SingleMedicine extends StatelessWidget {
   const SingleMedicine({Key? key}) : super(key: key);
@@ -8,11 +10,37 @@ class SingleMedicine extends StatelessWidget {
   Widget build(BuildContext context) {
     final Medicine medicine =
         ModalRoute.of(context)!.settings.arguments as Medicine;
-
+    final favorite = Provider.of<FavoritesProvider>(context);
+    final isfavorite = favorite.isFavorite(medicine);
     Color colorPrimary = Theme.of(context).primaryColor;
 
     return Scaffold(
-      appBar: AppBar(title: Text('${medicine.activePrincipleMed}')),
+      appBar: AppBar(
+        title: Text('${medicine.activePrincipleMed}'),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                  onTap: () async {
+                    if (!isfavorite) {
+                      await favorite.addFavorite(medicine);
+                    } else {
+                      await favorite.removeFavorite(medicine);
+                    }
+                  },
+                  child: isfavorite
+                      ? const Icon(
+                          Icons.bookmark,
+                          size: 26.0,
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          Icons.bookmark_add_outlined,
+                          size: 26.0,
+                          color: Colors.white,
+                        ))),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(5.0),

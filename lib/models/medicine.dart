@@ -11,6 +11,7 @@ class Medicine {
         this.codeSubClassification,
         this.nameSubClassification,
         this.additionalSubClassification,
+        this.idMedicine,
         this.activePrincipleMed,
         this.pharmaceuticalFormMed,
         this.indicationsMed,
@@ -29,6 +30,7 @@ class Medicine {
     String? codeSubClassification;
     String? nameSubClassification;
     dynamic additionalSubClassification;
+    int? idMedicine;
     String? activePrincipleMed;
     String? pharmaceuticalFormMed;
     String? indicationsMed;
@@ -51,6 +53,7 @@ class Medicine {
         codeSubClassification: json["codeSubClassification"],
         nameSubClassification: json["nameSubClassification"],
         additionalSubClassification: json["additionalSubClassification"],
+        idMedicine: json["idMedicine"],
         activePrincipleMed: json["activePrincipleMed"],
         pharmaceuticalFormMed: json["pharmaceuticalFormMed"],
         indicationsMed: json["indicationsMed"],
@@ -70,6 +73,7 @@ class Medicine {
         "codeSubClassification": codeSubClassification,
         "nameSubClassification": nameSubClassification,
         "additionalSubClassification": additionalSubClassification,
+        "idMedicine": idMedicine,
         "activePrincipleMed": activePrincipleMed,
         "pharmaceuticalFormMed": pharmaceuticalFormMed,
         "indicationsMed": indicationsMed,

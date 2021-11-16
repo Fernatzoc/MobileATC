@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guia_medicamentos/providers/favorites_provider.dart';
 import 'package:guia_medicamentos/providers/groups_provider.dart';
 import 'package:guia_medicamentos/routes.dart';
 import 'package:guia_medicamentos/theme.dart';
@@ -14,7 +15,8 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => GroupProvider(), lazy: false)
+        ChangeNotifierProvider(create: (_) => GroupProvider(), lazy: false),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider(), lazy: false),
       ],
       child: const MyApp(),
     );

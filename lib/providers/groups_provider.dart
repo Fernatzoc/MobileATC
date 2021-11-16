@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:guia_medicamentos/helpers/debouncer.dart';
 import 'package:guia_medicamentos/models/group_model.dart';
 import 'package:guia_medicamentos/models/medicine.dart';
 import 'package:guia_medicamentos/models/medicines_response.dart';
@@ -9,6 +12,15 @@ import 'package:http/http.dart' as http;
 class GroupProvider extends ChangeNotifier {
   
   String _selectedGroup = 'A';
+
+  final debouncer = Debouncer(
+    duration: const Duration(milliseconds: 500), 
+    // onValue: 
+  );
+
+  final StreamController<List<Medicine>> _suggestionsStreamController = StreamController.broadcast();
+  Stream<List<Medicine>> get suggestionStream => _suggestionsStreamController.stream;
+
 
   List<Group> groups = [
     Group(
@@ -34,7 +46,7 @@ class GroupProvider extends ChangeNotifier {
     Group(
         FontAwesomeIcons.carCrash,
         'G',
-        'assets/icons/antiinfecciosos.png',
+        'assets/icons/rinon.png',
         'Sistema genitourinario y hormonas sexuales'),
     Group(
         FontAwesomeIcons.plus,
@@ -64,16 +76,16 @@ class GroupProvider extends ChangeNotifier {
     Group(
         FontAwesomeIcons.theaterMasks,
         'S',
-        'assets/icons/cuerpo-humano.png',
-        'órganos de los sentidos'),
+        'assets/icons/sentidos.png',
+        'Órganos de los sentidos'),
   ];
 
   Map<String, List<Medicine>> medicines = {};
 
   GroupProvider() {
-    groups.forEach((item) {
+    for (var item in groups) {
       medicines[item.request] = [];
-    });
+    }
   }
 
   String get selectedGroup => _selectedGroup;
@@ -93,7 +105,7 @@ class GroupProvider extends ChangeNotifier {
       return medicines[group];
     }
 
-    final url = Uri.parse('http://192.168.1.5:8000/api/medicines?letter=${group}');
+    final url = Uri.parse('http://192.168.1.5:8000/api/medicines?group=$group');
 
     final resp = await http.get(url);
 
@@ -101,9 +113,36 @@ class GroupProvider extends ChangeNotifier {
 
     medicines[group]!.addAll( medicineResponse.medicines );
 
-    print(medicines);
+    // print(medicines);
 
     notifyListeners();
   }
+
+
+  Future<List<Medicine>> searchMedicine(String query) async {
+
+    final url = Uri.parse('http://192.168.1.5:8000/api/search/$query');
+
+    final response = await http.get(url);
+    final searchResponse = MedicineResponse.fromJson( response.body );
+
+    return searchResponse.medicines;
+
+  }
+
+  void getSuggestionsByQuery(String searchTerm) {
+    debouncer.value = '';
+    debouncer.onValue = (value) async {
+      final results = await searchMedicine(value);
+      _suggestionsStreamController.add(results);
+    };
+
+    final timer = Timer.periodic(const Duration(milliseconds: 300), (_) { 
+      debouncer.value = searchTerm;
+    });
+
+    Future.delayed(const Duration(milliseconds: 301)).then((_) => timer.cancel());
+  }
+
   
 }

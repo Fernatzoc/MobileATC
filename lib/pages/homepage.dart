@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guia_medicamentos/pages/favorites.dart';
 import 'package:guia_medicamentos/pages/groups.dart';
+import 'package:guia_medicamentos/search/search_delegate.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,9 +27,7 @@ class HomePage extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
-                      onTap: () {
-                        print('Search');
-                      },
+                      onTap: () => showSearch(context: context, delegate: MedicineSearchDelegate()),
                       child: const Icon(
                         Icons.search,
                         size: 26.0,
@@ -42,13 +41,13 @@ class HomePage extends StatelessWidget {
                 indicatorWeight: 4.0,
                 tabs: [
                   Tab(child: Text('Grupos')),
-                  Tab(child: Text('Favoritos')),
+                  Tab(child: Text('Guardado')),
                 ],
               ),
             ),
           ];
         },
-        body: const TabBarView(
+        body:  const TabBarView(
           children: <Widget>[Groups(), Favorites()],
         ),
       )),

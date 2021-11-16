@@ -15,6 +15,7 @@ class Classification extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Grupo $group'),
+        centerTitle: true,
       ),
       body: medicines!.isEmpty
           ? const Center(child: CircularProgressIndicator(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guia_medicamentos/models/medicine.dart';
 import 'package:guia_medicamentos/providers/favorites_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:html/parser.dart' show parse;
 
 class SingleMedicine extends StatelessWidget {
   const SingleMedicine({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class SingleMedicine extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${medicine.activePrincipleMed}'),
+        title: Text(parse(medicine.activePrincipleMed).documentElement!.text),
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -63,8 +64,7 @@ class SingleMedicine extends StatelessWidget {
                                 fontWeight: FontWeight.bold, fontSize: 22.0))),
                     const SizedBox(height: 5.0),
                     Center(
-                        child: Text(
-                      '${medicine.activePrincipleMed}',
+                        child: Text(parse(medicine.activePrincipleMed).documentElement!.text,
                       style: const TextStyle(fontSize: 18.0),
                     )),
                   ],
@@ -161,7 +161,7 @@ class _CardInfo extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            code + ' ' + name,
+            parse(code).documentElement!.text + ' ' + parse(name).documentElement!.text,
             style: const TextStyle(fontSize: 15),
           ),
         ],

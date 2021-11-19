@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guia_medicamentos/models/medicine.dart';
+import 'package:html/parser.dart' show parse;
 
 class CardMedicine extends StatelessWidget {
   final Medicine medicine;
@@ -19,11 +20,11 @@ class CardMedicine extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         child: ListTile(
           leading: CircleAvatar(
-            child: Text('${medicine.letterGroup}'),
+            child: Text(parse(medicine.letterGroup).documentElement!.text),
             backgroundColor: const Color(0xff21A3B5),
           ),
-          title: Text('${medicine.activePrincipleMed}'),
-          subtitle: Text('${medicine.letterGroup}${medicine.codeClassification} ${medicine.codeSubClassification}'),
+          title: Text(parse(medicine.activePrincipleMed).documentElement!.text),
+          subtitle: Text('${medicine.codeSubClassification}'),
           trailing: const Icon(Icons.arrow_forward_ios),
         ),
       ),

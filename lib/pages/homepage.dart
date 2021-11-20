@@ -18,7 +18,8 @@ class HomePage extends StatelessWidget {
               title: const Text('Guia ATC'),
               pinned: true,
               floating: true,
-              backgroundColor: const Color(0xff089cad),
+              backgroundColor: const Color(0xff267ebd),
+              // backgroundColor: const Color(0xff267ebd),
               titleTextStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 20.0

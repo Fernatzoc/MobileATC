@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:guia_medicamentos/helpers/funcions.dart';
 import 'package:guia_medicamentos/models/medicine.dart';
 import 'package:guia_medicamentos/providers/favorites_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,8 @@ class SingleMedicine extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(parse(medicine.activePrincipleMed).documentElement!.text),
+        title: Text(getFirstWord(
+            parse(medicine.activePrincipleMed).documentElement!.text)),
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -25,8 +28,24 @@ class SingleMedicine extends StatelessWidget {
                   onTap: () async {
                     if (!isfavorite) {
                       await favorite.addFavorite(medicine);
+                      Fluttertoast.showToast(
+                          msg: "Guardado",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: const Color(0XFF267ebd),
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     } else {
                       await favorite.removeFavorite(medicine);
+                      Fluttertoast.showToast(
+                          msg: "Eliminado",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: const Color(0XFFe53935),
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     }
                   },
                   child: isfavorite
@@ -64,13 +83,40 @@ class SingleMedicine extends StatelessWidget {
                                 fontWeight: FontWeight.bold, fontSize: 22.0))),
                     const SizedBox(height: 5.0),
                     Center(
-                        child: Text(parse(medicine.activePrincipleMed).documentElement!.text,
+                        child: Text(
+                      parse(medicine.activePrincipleMed).documentElement!.text,
                       style: const TextStyle(fontSize: 18.0),
                     )),
                   ],
                 ),
               ),
               const SizedBox(height: 15.0),
+              if (medicine.criterionMed == 'START')
+                Column(
+                  children: [
+                    _CardInfo(
+                        title:
+                            'Criterio para un uso correcto en personas mayores',
+                        color: const Color(0XFF00e676).withOpacity(0.2),
+                        code: medicine.criterionMed.toString(),
+                        name:
+                            'tratamiento indicado y apropiado. Este medicamento puede ser considerado en personas de 65 o más años'),
+                    const SizedBox(height: 15.0),
+                  ],
+                ),
+              if (medicine.criterionMed == 'STOPP')
+                Column(
+                  children: [
+                    _CardInfo(
+                        title:
+                            'Criterio para un uso correcto en personas mayores',
+                        color: const Color(0XFFd50000).withOpacity(0.2),
+                        code: medicine.criterionMed.toString(),
+                        name:
+                            'potencialmente inapropiadas en personas mayores'),
+                    const SizedBox(height: 15.0),
+                  ],
+                ),
               _CardInfo(
                   title: 'Forma Farmaceutica',
                   color: const Color(0XFFEDEDED),
@@ -118,11 +164,17 @@ class SingleMedicine extends StatelessWidget {
                   code: medicine.codeClassification.toString(),
                   name: medicine.nameClassification.toString()),
               const SizedBox(height: 15.0),
-              _CardInfo(
-                  title: 'Subclasificación',
-                  color: colorPrimary.withOpacity(0.2),
-                  code: medicine.codeSubClassification.toString(),
-                  name: medicine.nameSubClassification.toString()),
+              if (medicine.codeSubClassification != null)
+                Column(
+                  children: [
+                    _CardInfo(
+                        title: 'Subclasificación',
+                        color: colorPrimary.withOpacity(0.2),
+                        code: medicine.codeSubClassification.toString(),
+                        name: medicine.nameSubClassification.toString()),
+                    const SizedBox(height: 15.0),
+                  ],
+                ),
             ],
           ),
         ),
@@ -161,7 +213,9 @@ class _CardInfo extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            parse(code).documentElement!.text + ' ' + parse(name).documentElement!.text,
+            parse(code).documentElement!.text +
+                ' ' +
+                parse(name).documentElement!.text,
             style: const TextStyle(fontSize: 15),
           ),
         ],

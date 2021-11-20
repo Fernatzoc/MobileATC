@@ -19,7 +19,7 @@ class Classification extends StatelessWidget {
       ),
       body: medicines!.isEmpty
           ? const Center(child: CircularProgressIndicator(
-            color: Color(0xff089cad),
+            color: Color(0xff267ebd),
           ))
           : ListView.builder(
               physics: const BouncingScrollPhysics(),

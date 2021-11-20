@@ -82,8 +82,8 @@ class _CardButtomBackground extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         gradient: const LinearGradient(
           colors: [
-            Color(0xff21A3B5),
-            Color( 0xff2EA7B9),
+            Color(0xff2e91d8),
+            Color( 0xff267ebd),
           ]
         )
       ),

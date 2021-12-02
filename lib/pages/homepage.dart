@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: const Text('Guia ATC'),
+              title: const Text('Vademecum Geria Gt'),
               pinned: true,
               floating: true,
               backgroundColor: const Color(0xff267ebd),

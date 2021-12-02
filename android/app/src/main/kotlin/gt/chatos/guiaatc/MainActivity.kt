@@ -1,4 +1,4 @@
-package com.example.guia_medicamentos
+package gt.chatos.guiaatc
 
 import io.flutter.embedding.android.FlutterActivity
 

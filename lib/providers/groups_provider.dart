@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class GroupProvider extends ChangeNotifier {
   
+  final site = 'https://vademecumgeriagt.com';
   String _selectedGroup = 'A';
 
   final debouncer = Debouncer(
@@ -105,7 +106,8 @@ class GroupProvider extends ChangeNotifier {
       return medicines[group];
     }
 
-    final url = Uri.parse('http://192.168.1.5:8000/api/medicines?group=$group');
+    // final url = Uri.parse('http://192.168.1.5:8000/api/medicines?group=$group');
+    final url = Uri.parse('$site/api/medicines?group=$group');
 
     final resp = await http.get(url);
 
@@ -121,7 +123,7 @@ class GroupProvider extends ChangeNotifier {
 
   Future<List<Medicine>> searchMedicine(String query) async {
 
-    final url = Uri.parse('http://192.168.1.5:8000/api/search/$query');
+    final url = Uri.parse('$site/api/search/$query');
 
     final response = await http.get(url);
     final searchResponse = MedicineResponse.fromJson( response.body );

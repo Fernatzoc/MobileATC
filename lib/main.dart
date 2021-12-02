@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Farmacos',
+      title: 'Vademecum Geria Gt',
       initialRoute: 'home',
       routes: appRoputes,
       theme: theme,
